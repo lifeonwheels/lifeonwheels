@@ -259,7 +259,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/04/a-tale-of-two-cities/">A Tale of Two Cites</a>
+      <a class="article-title" href="/2017/08/05/a-tale-of-two-cities/">A Tale of Two Cites</a>
     </h1>
   
 
@@ -267,8 +267,8 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/04/a-tale-of-two-cities/" class="article-date">
-	  <time datetime="2017-08-04T08:49:36.902Z" itemprop="datePublished">2017-08-04</time>
+	<a href="/2017/08/05/a-tale-of-two-cities/" class="article-date">
+	  <time datetime="2017-08-05T03:05:05.947Z" itemprop="datePublished">2017-08-05</time>
 	</a>
 
       
@@ -277,14 +277,22 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>Windows and Mac are two dominant desktop systems for personal usage in any enterprise. My current company provides Windows laptop as offical employee device. Using Windows laptop bring lots of pain to me and other developers since Windows is not developer-friendly. Fortunately bosses decided provide MacBook to us for daily work, and I am the first pilot. I have been using MacBook for one week and never touch my Windows laptop again. It works very well so far. Below are some notes/tips for using MacBook.</p>
-<h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+<h3 id="Network-Access"><a href="#Network-Access" class="headerlink" title="Network Access"></a>Network Access</h3><p>When using “GlobalConnect”, corporate proxies need to enabled. When using public WiFi, proxies must be turn off. Frequently enable/disable the proxies wastes lots of time.</p>
+<p>This can be done be some simple scripts. It use apple-buildin command, networksetup, to control proxies behavior. Below are on.sh and off.sh scripts, are used to switch on/off corporate proxies config.  Copy them under /usr/local/bin. (If no premission I will explian it in coming section). After that, one can type</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(on.sh)</div><div class="line"><span class="meta">#! /bin/bash</span></div><div class="line"></div><div class="line">sudo networksetup -setsecurewebproxystate Wi-Fi on</div><div class="line">sudo networksetup -setwebproxystate Wi-Fi on</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"turn on proxies."</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(off.sh)</div><div class="line"><span class="meta">#! /bin/bash</span></div><div class="line"></div><div class="line">sudo networksetup -setsecurewebproxystate Wi-Fi off</div><div class="line">sudo networksetup -setwebproxystate Wi-Fi off</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"turn off proxies."</span></div></pre></td></tr></table></figure>
+<p>And copy these two scripts to /usr/local/bin directory. (If no premission I will explian it in coming section). Since Then simply type</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ on</div><div class="line">$ off</div></pre></td></tr></table></figure>
+<p>to enable or disable proxies. I know it is still some extra effor for the impatient users but it is much better than opening “System” -&gt; “Network” -&gt; “Wifi” -&gt; “Advenced” -&gt; “Proxies” and double clicks.</p>
+<h3 id="Using-“sudo”-without-password"><a href="#Using-“sudo”-without-password" class="headerlink" title="Using “sudo” without password"></a>Using “sudo” without password</h3><p>Many tasks like starting/stopping services, installing packages, and invoking on.sh and off.sh I mentioned in last section, sudo and password are required. To avoid typing password, add this line to /etc/sudoers file:</p>
+<p>kaihan ALL=(ALL) NOPASSWD:ALL   (here “haihan” is my login account)</p>
+<h3 id="Premission"><a href="#Premission" class="headerlink" title="Premission"></a>Premission</h3><p>During accessing some system directories like /usr, /usr/lib, I encountered “premission denied” issue since these folders are assign to “root” user and “wheel” group. However my account is belong to “admin” group. “wheel” group was a historical legacy of BSD UNIX (and unfortunately MacOS was port from BSD UNIX) and it was very similar with “admin” group. To grant the premission of wheel group, just simply add my account (kaihan) to “wheel” group,</p>
+<p>——- /etc/group ——-<br>wheel:<em>:0:root  -&gt; wheel:</em>:0:root:kaihan (here “haihan” is my login account)</p>
+<h3 id="Setup-Outlook-and-Skype"><a href="#Setup-Outlook-and-Skype" class="headerlink" title="Setup Outlook and Skype"></a>Setup Outlook and Skype</h3><p>Outlook and Skype work very well on Mac. Below are the detail information of configuration.</p>
+<p>Outlook<br>|Domain | APAC|</p>
+<h3 id="Access-SharePoint"><a href="#Access-SharePoint" class="headerlink" title="Access SharePoint"></a>Access SharePoint</h3><p>SharePoint sites are accessable from Mac. However, if you use Chrome, you are prompted to type crendential to visit SharePoint site every time. If you use Firefox or Safari, no crendential needed and you can auto login as same as in Windows.</p>
+<p>The reason of the different behavior is Chrome has more sensitive security control. If there is solution found, I will update the content.</p>
+<h3 id="T-Drive"><a href="#T-Drive" class="headerlink" title="T-Drive"></a>T-Drive</h3><p>Under evaluation.</p>
 
       
     </div>
